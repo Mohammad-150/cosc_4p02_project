@@ -1,13 +1,13 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import { Container } from '@mui/material';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import HomePage from "./pages/HomePage";
+import { Container } from "@mui/material";
 
 // ProtectedRoute component ensures that only authenticated users can access certain routes
 const ProtectedRoute = ({ children }) => {
-  const user = localStorage.getItem('user'); // Retrieve user data from localStorage
+  const user = localStorage.getItem("user"); // Retrieve user data from localStorage
 
   // If no user is found (not logged in), redirect to the login page
   if (!user) {
@@ -21,13 +21,13 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   return (
     <Routes>
-      {/* Protected Route for Home Page ("/") */}
+      {/* Open Route for Home Page */}
       <Route
         path="/"
         element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
+          <Container component="main">
+            <HomePage />
+          </Container>
         }
       />
 
@@ -36,7 +36,7 @@ const App = () => {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Home />
+            <HomePage />
           </ProtectedRoute>
         }
       />

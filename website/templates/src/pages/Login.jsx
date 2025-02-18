@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Box, TextField, Button, Typography, Alert, Paper } from '@mui/material';
-import { login } from '../services/api'; // Importing login API call
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Alert,
+  Paper,
+} from "@mui/material";
+import { login } from "../services/api"; // Importing login API call
 
 const Login = () => {
   const navigate = useNavigate(); // Hook for programmatic navigation
-  const [formData, setFormData] = useState({ email: '', password: '' }); // Form data state
+  const [formData, setFormData] = useState({ email: "", password: "" }); // Form data state
   const [errors, setErrors] = useState({}); // Validation errors state
-  const [serverError, setServerError] = useState(''); // Server error state for failed logins
+  const [serverError, setServerError] = useState(""); // Server error state for failed logins
 
   // Form validation logic
   const validateForm = () => {
     const newErrors = {};
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid'; // Regex checks for basic email format
+      newErrors.email = "Email is invalid"; // Regex checks for basic email format
     }
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
@@ -36,7 +43,7 @@ const Login = () => {
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: '',
+        [name]: "",
       }));
     }
   };
@@ -49,17 +56,24 @@ const Login = () => {
     try {
       const response = await login(formData.email, formData.password); // API call to login
       if (response.user) {
-        localStorage.setItem('user', JSON.stringify(response.user)); // Store user data for session management
-        navigate('/dashboard'); // Redirect to dashboard after successful login
+        localStorage.setItem("user", JSON.stringify(response.user)); // Store user data for session management
+        navigate("/dashboard"); // Redirect to dashboard after successful login
       }
     } catch (error) {
-      setServerError(error.error || 'Login failed. Please try again.'); // Handle server errors
+      setServerError(error.error || "Login failed. Please try again."); // Handle server errors
     }
   };
 
   return (
-    <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
+    <Box
+      sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Paper elevation={3} sx={{ p: 4, width: "100%" }}>
         <Typography component="h1" variant="h5" align="center" gutterBottom>
           Sign In
         </Typography>
@@ -101,14 +115,19 @@ const Login = () => {
             error={!!errors.password}
             helperText={errors.password}
           />
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
             Sign In
           </Button>
 
           {/* Link to registration page */}
           <Typography align="center">
-            Don't have an account?{' '}
-            <Link to="/register" style={{ textDecoration: 'none' }}>
+            Don't have an account?{" "}
+            <Link to="/register" style={{ textDecoration: "none" }}>
               Sign Up
             </Link>
           </Typography>
